@@ -45,7 +45,7 @@ Two entries *SSLP-1774* and *SSLP-1842* will have their worklog entries created
 ### How to install?
 
 ```bash
-npm install -g time-log-poster
+npm install -g time-log-poster-cli
 ```
 
 Go to your home folder e.g. 
