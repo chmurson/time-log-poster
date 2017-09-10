@@ -1,0 +1,5 @@
+{
+  "ticketRegex": "XXXX-[0-9]+",
+  "jiraUrl": "https://jira.example.com",
+  "authorizationToken": "Basic eW91cjpwYXNzd29yZA==="
+}

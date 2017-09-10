@@ -1,0 +1,22 @@
+{
+  "name": "time-log-poster-cli",
+  "version": "1.0.0",
+  "engines": {
+    "node": ">=6.5.0"
+  },
+  "description": "The tool receives time log, process it and posts on e.g. Jira how much time was spent on specified tasks.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "homedir": "0.6.0",
+    "node-fetch": "1.7.3",
+    "object.entries": "1.0.4"
+  },
+  "bin": {
+    "time-log-poster": "index.js"
+  }
+}
