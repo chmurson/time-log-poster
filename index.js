@@ -63,7 +63,7 @@ function processEntries(entries) {
     Object.entries(totalTimePerSSLTicket).forEach(([ticket, timeInMinutes]) => {
       const time = minutesIntoJiraWorkloadFormat(timeInMinutes);
       const entries = entriesPerSSLTickets[ticket];
-      const startTime = dateToJiraFormat(new Date(entries[entries.length - 1].end));
+      const startTime = new Date(entries[entries.length - 1].end);
       logTimeIntoJira(ticket, time, startTime);
     });
   } else {
@@ -76,8 +76,8 @@ function processEntries(entries) {
  * @param {string} timeSpent
  * @param {string} started
  */
-function logTimeIntoJira(ticketId, timeSpent, started) {
-  console.log(`Posting ${ticketId} : ${timeSpent} at date ${started} started...`);
+function logTimeIntoJira(ticketId, timeSpent, date) {
+  console.log(`Posting of ${timeSpent} to ${ticketId} on ${date.toDateString()} started...`);
   return fetch(config.jiraUrl + `/rest/api/2/issue/${ticketId}/worklog`, {
     method: 'POST',
     headers: {
@@ -86,7 +86,7 @@ function logTimeIntoJira(ticketId, timeSpent, started) {
     },
     body: JSON.stringify({
       timeSpent: `${timeSpent}`,
-      started: '2017-09-07T09:21:41.000+0000'
+      started: dateToJiraFormat(date)
     })
   }).then(response => {
     if (response.status > 299) {
