@@ -1,18 +1,18 @@
 ## Motivation
 
-Have you ever felt tired keeping track on your working time for each task and logging it in Jira?
-`time-log-poster` connects Jira with simple and power tool for loging time via CLI -[Timetrap - Simple Time Tracking](https://github.com/samg/timetrap). 
-It creates for you worklog entries in every jira task that correspond to Timestrap's entry.
+Have you ever felt tired with keeping track of your working time for each task and logging it in Jira?
+`time-log-poster` connects Jira with simple and power tool for logging time via CLI -[Timetrap - Simple Time Tracking](https://github.com/samg/timetrap). 
+It creates worklog entries in every Jira task that correspond to Timestrap's entry.
 
 ### How to use it ?
 
-Let's say we have following entries during a day:
+Let's say we have following entries during a day :
 ```bash
 t display -s  "Sep 07" -e "Sep 07"
 ```
 outputs:
 ```                                                                                                                              
-Timesheet: SSLPortal
+Timesheet: MyProject
     Day                Start      End        Duration   Notes
     Thu Sep 07, 2017   10:20:00 - 10:50:00   0:30:00
                        10:50:00 - 11:21:41   0:31:41    SSLP-1774-webpack-update
@@ -25,7 +25,6 @@ Timesheet: SSLPortal
     Total                                    7:19:37
 ```
 Take a notice, that some entries have notes with Jira issue id (e.g. SSLP-1842). They are used by `time-log-poster` to find a jira tasks and create appropriate worklog entries.
-
 
 Single line command moves above data into Jira,
 ```bash
@@ -40,7 +39,7 @@ Posting of 1h to SSLP-1842 on Thu Sep 07 2017 started...
 Success posting SSLP-1842 : 1h
 Success posting SSLP-1774 : 5h
 ```
-Two entries *SSLP-1774* and *SSLP-1842* will have their worklog entries created
+Now two entries *SSLP-1774* and *SSLP-1842*  have their worklog entries created.
 
 ### How to install?
 
@@ -64,12 +63,12 @@ Copy and paste following example content to your newly created file.
 }
 ```
 You need to provide proper values for each configuration entry: `ticketRegex`, `jiraUrl` and `authorizationToken`. 
-The two first are project specific, you should be able easily to find proper values on your own. 
+The two first are project specific, you should be able to easily find proper values on your own. 
 
 #### authorizationToken
-The third - `authorizationToken` holds a value for basic access authorization. The tool uses it while to make requests to Jira. 
+The third - `authorizationToken` holds a value for basic access authorization. The tool uses it to make requests to Jira API. 
 
-You can create it easily by converting following text `username:passowrd` into base64 text. For instance by running following code (of course you need to replace `username` and `password` strings):
+You can create it easily by converting following text `username:passowrd` with Base64, e.g. by running following JS code (of course you need to replace `username` and `password` strings):
 ```js
 var b = new Buffer('username:password');
 console.log(b.toString('base64'));
