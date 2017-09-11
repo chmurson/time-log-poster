@@ -5,7 +5,11 @@
  * This outputs the number of bytes the content passed to it.
  */
 
-const fetch = require('node-fetch');
+//const fetch = require('node-fetch');
+function fetch() {
+  return Promise.resolve({ status: 201 });
+}
+
 const homeDir = require('homedir');
 const path = require('path');
 const fs = require('fs');
@@ -59,7 +63,6 @@ function processEntries(entries) {
     console.log('Time without without tickets: ', ticketlessTime);
   }
   if (Object.keys(totalTimePerSSLTicket).length > 0) {
-    console.log('Posting time per ticket:');
     Object.entries(totalTimePerSSLTicket).forEach(([ticket, timeInMinutes]) => {
       const time = minutesIntoJiraWorkloadFormat(timeInMinutes);
       const entries = entriesPerSSLTickets[ticket];
@@ -67,14 +70,14 @@ function processEntries(entries) {
       logTimeIntoJira(ticket, time, startTime);
     });
   } else {
-    console.logs('There are no logs with Jira issue tickets');
+    console.log('There are no logs with Jira issue tickets');
   }
 }
 
 /**
  * @param {string} ticketId
  * @param {string} timeSpent
- * @param {string} started
+ * @param {string} date
  */
 function logTimeIntoJira(ticketId, timeSpent, date) {
   console.log(`Posting of ${timeSpent} to ${ticketId} on ${date.toDateString()} started...`);
@@ -116,7 +119,7 @@ function sumMinutesOfEntriesDurations(entries) {
 /**
  * @param {{id: Number, note: String, start: String, end: String}[]} entries
  */
-function groupEntriesPerSSLTicket(entries){
+function groupEntriesPerSSLTicket(entries) {
   return entries.reduce((prev, entry) => {
     const matchResult = config.ticketRegex.exec(entry.note);
     if (matchResult === null) {
@@ -135,16 +138,15 @@ function groupEntriesPerSSLTicket(entries){
 function minutesIntoJiraWorkloadFormat(totalMinutes) {
   const modMinutes = parseInt(totalMinutes % 60);
   const hours = parseInt(totalMinutes / 60);
-  const result = (hours) ? `${hours}h ` : '' + `${modMinutes}m`;
-  return result.trim();
+  return `${(hours) ? `${hours}h ` : '' }${modMinutes}m`.trim();
 }
 
 /**
  * @param {Date} date
  * @return {string}
  */
-function dateToJiraFormat(date){
-  return date.toISOString().replace('Z','+0000');
+function dateToJiraFormat(date) {
+  return date.toISOString().replace('Z', '+0000');
 }
 
 /**
@@ -160,13 +162,13 @@ function readConfig() {
   try {
     file = JSON.parse(fs.readFileSync(configFilePath));
   } catch (e) {
-    console.error(`Coudn't parse file at ${configFilePath}`);
+    console.error(`Couldn't parse file at ${configFilePath}`);
     console.error(e);
   }
   try {
     file.ticketRegex = new RegExp(file.ticketRegex);
   } catch (e) {
-    console.error(`Coudn't parse regex pattern at 'ticketRegex' of config file at ${configFilePath}`);
+    console.error(`Couldn't parse regex pattern at 'ticketRegex' of config file at ${configFilePath}`);
   }
   return file;
 }
@@ -175,8 +177,7 @@ function readConfig() {
 // Called with arguments. E.g.:
 // ./example-script "pass in this string as input"
 // ------------------------------------------------------------
-//if (process.stdin.isTTY) { //??NOT WORKING IN INTELLIJ DEBUG MODE?
-if (true) {
+if (process.stdin.isTTY) {
   // Even though executed by name, the first argument is still "node",
   // the second the script name. The third is the string we want.
   const data = new Buffer(process.argv[2] || '', encoding);

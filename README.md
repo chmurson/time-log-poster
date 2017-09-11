@@ -33,11 +33,10 @@ t display -s  "Sep 07" -e "Sep 07" -fjson | time-log-poster
 outputs:
 ```bash
 Time without without tickets:  30m
-Posting time per ticket:
-Posting of 5h to SSLP-1774 on Thu Sep 07 2017 started...
-Posting of 1h to SSLP-1842 on Thu Sep 07 2017 started...
-Success posting SSLP-1842 : 1h
-Success posting SSLP-1774 : 5h
+Posting of 5h 37m to SSLP-1774 on Thu Sep 07 2017...
+Posting of 1h 12m to SSLP-1842 on Thu Sep 07 2017...
+Success posting SSLP-1774 : 5h 37m
+Success posting SSLP-1842 : 1h 12m
 ```
 Now two entries *SSLP-1774* and *SSLP-1842*  have their worklog entries created.
 
