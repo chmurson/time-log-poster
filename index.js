@@ -32,7 +32,6 @@ function processData(data) {
   try {
     jsonData = JSON.parse(data.toString());
   } catch (e) {
-    console.log(data.toString());
     console.log("Data is not a proper JSON");
     process.exit(1)
   }
@@ -74,7 +73,7 @@ function processEntries(entries) {
 /**
  * @param {string} ticketId
  * @param {string} timeSpent
- * @param {string} date
+ * @param {Date} date
  */
 function logTimeIntoJira(ticketId, timeSpent, date) {
   console.log(`Posting of ${timeSpent} to ${ticketId} on ${date.toDateString()} started...`);
@@ -86,7 +85,8 @@ function logTimeIntoJira(ticketId, timeSpent, date) {
     },
     body: JSON.stringify({
       timeSpent: `${timeSpent}`,
-      started: dateToJiraFormat(date)
+      started: dateToJiraFormat(date),
+      comment: `Posted by time-log-poster-cli at ${new Date().toISOString()}`
     })
   }).then(response => {
     if (response.status > 299) {
