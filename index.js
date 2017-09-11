@@ -5,10 +5,7 @@
  * This outputs the number of bytes the content passed to it.
  */
 
-//const fetch = require('node-fetch');
-function fetch() {
-  return Promise.resolve({ status: 201 });
-}
+const fetch = require('node-fetch');
 
 const homeDir = require('homedir');
 const path = require('path');
